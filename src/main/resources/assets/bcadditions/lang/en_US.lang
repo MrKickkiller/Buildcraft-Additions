@@ -9,6 +9,7 @@ tile.blockDusterKinetic.name=Kinetic Duster
 tile.blockCoilLava.name=Lava Coil
 tile.blockCoilKinetic.name=Kinetic Coil
 tile.blockKEBT1.name=Kinetic Energy Buffer
+tile.blockKEBT1Creative.name=Creative Kinetic Energy Buffer
 tile.blockKEBT2.name=Large Kinetic Energy Buffer
 tile.blockKEBT3Core.name=Advanced Kinetic Energy Buffer Core
 tile.blockKEBT3Plating.name=Advanced Kinetic Energy Buffer Plating
@@ -40,16 +41,7 @@ item.toolUpgradeDigger.name=Excavation Attachment
 item.toolUpgradeChainsaw.name=Saw Blade
 item.toolUpgradeHoe.name=Tiller
 item.kineticMultiTool.name=Kinetic Multi-Tool
-item.dustGold.name=Gold Dust
-item.dustIron.name=Iron Dust
-item.dustCopper.name=Copper Dust
-item.dustLead.name=Lead Dust
-item.dustNickel.name=Nickel Dust
-item.dustPlatinum.name=Platinum Dust
-item.dustTin.name=Tin Dust
-item.dustSilver.name=Silver Dust
-item.dustDiamond.name=Diamond Dust
-item.dustEmerald.name=Emerald Dust
+item.dust.name=%s Dust
 item.grindingWheel.name=Grinding Wheel
 item.engineeringDiary.name=Engineering Diary
 item.wireIron.name=Iron Wire
@@ -62,6 +54,8 @@ item.heatPlatingRaw.name=Raw Heat Conducting Plating
 item.heatPlating.name=Heat Conducting Plating
 item.dustConverter.name=Dust Conveter
 item.machineConfigurator.name=Machine Configurator
+item.bcaBucket.name=%s Bucket
+item.pipeColoringTool.name=Pipe Coloring Tool
 
 tooltip.installed=%s Installed
 tooltip.deactivated=Deactivated
@@ -69,8 +63,12 @@ tooltip.upgradesPossible=Upgrades Possible
 tooltip.holdShiftForMoreInfo=Hold Shift for more info
 tooltip.FluidCapacity=Can hold %s buckets of fluid
 tooltip.storedFluid=Currently stores %s mb of %s
+tooltip.colorPipeMode=Pipe Color
+tooltip.colorPipeMode.info=Colors standard BC pipes
+tooltip.colorSortingMode=Sorting Color
+tooltip.colorSortingMode.info=Colors the sorting part of the DaiZuli and Lapis pipes
 
-fluid.fluid.gas=Gas
+fluid.gas.name=%s Gas
 
 gui.progress=Progress
 gui.fluid=Fluid
@@ -105,6 +103,10 @@ gui.priority=Priority
 gui.kineticTool.name=Kinetic Tool
 gui.heatedFurnace.name=Heated Furnace
 gui.fluidicCompressor.name=Fluidic Compressor
+gui.coloringMode=Coloring Mode
+gui.pipeColorTool.name=Pipe Coloring Tool
+gui.colorPipeMode=Pipe Color
+gui.colorSortingMode=Sorting Color
 
 gui.keb.dangerousButton=BIG RED BUTTONS ARE VERY DANGEROUS
 gui.keb.noPushing=DON'T PUSH IT
@@ -131,7 +133,7 @@ priority.high=High
 priority.veryHigh=Very High
 
 itemGroup.BuildcraftAdditions=Buildcraft Additions
-itemGroup.bcaCanisters=Fluid Canisters
+itemGroup.bcaCanisters=Canisters
 itemGroup.bcaDusts=Dusts
 
 Eureka=EUREKA!
@@ -290,3 +292,5 @@ changelogNotification=Changelog
 
 selfdestructCountdouwn=SELF DESTUCTION IN
 selfdestructActivated=SELF DESTRUCT ACTIVATED
+
+configured=Configured

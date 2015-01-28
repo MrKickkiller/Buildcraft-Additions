@@ -1,13 +1,19 @@
 package buildcraftAdditions.blocks;
 
+import java.util.List;
+
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.IIcon;
+import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.world.Explosion;
 import net.minecraft.world.World;
 
@@ -15,7 +21,11 @@ import buildcraftAdditions.BuildcraftAdditions;
 import buildcraftAdditions.reference.Variables;
 import buildcraftAdditions.tileEntities.Bases.TileKineticEnergyBufferBase;
 import buildcraftAdditions.tileEntities.TileKineticEnergyBufferTier1;
+import buildcraftAdditions.utils.EnumPriority;
+import buildcraftAdditions.utils.EnumSideStatus;
 import buildcraftAdditions.utils.RenderUtils;
+import buildcraftAdditions.utils.SideConfiguration;
+
 /**
  * Copyright (c) 2014, AEnterprise
  * http://buildcraftadditions.wordpress.com/
@@ -35,10 +45,11 @@ public class BlockKineticEnergyBufferTier1 extends BlockContainer {
 
 	@Override
 	public void registerBlockIcons(IIconRegister register) {
-		icons = new IIcon[9];
-		for (int teller = 0; teller < 9; teller++){
+		icons = new IIcon[10];
+		for (int teller = 0; teller < 9; teller++) {
 			icons[teller] = RenderUtils.registerIcon(register, "kineticEnergyBuffer" + teller);
 		}
+		icons[9] = RenderUtils.registerIcon(register, "kineticEnergyBufferCreative");
 	}
 
 	@Override
@@ -50,7 +61,7 @@ public class BlockKineticEnergyBufferTier1 extends BlockContainer {
 
 	@Override
 	public IIcon getIcon(int side, int meta) {
-		if (meta > 8)
+		if (meta > 9)
 			return icons[8];
 		return icons[meta];
 	}
@@ -80,5 +91,34 @@ public class BlockKineticEnergyBufferTier1 extends BlockContainer {
 	@Override
 	public TileEntity createNewTileEntity(World world, int meta) {
 		return new TileKineticEnergyBufferTier1();
+	}
+
+	public ItemStack createCreativeKEB() {
+		ItemStack stack = new ItemStack(this, 1, 9);
+		stack.stackTagCompound = new NBTTagCompound();
+		stack.stackTagCompound.setBoolean("creative", true);
+		stack.stackTagCompound.setInteger("energy", 3000000);
+		stack.stackTagCompound.setInteger("maxEnergy", 3000000);
+		stack.stackTagCompound.setInteger("maxInput", 30000);
+		stack.stackTagCompound.setInteger("maxOutput", 30000);
+		SideConfiguration configuration = new SideConfiguration();
+		configuration.setAllStatus(EnumSideStatus.OUTPUT);
+		configuration.setAllPriority(EnumPriority.NORMAL);
+		configuration.writeToNBT(stack.stackTagCompound);
+		return stack;
+	}
+
+	@Override
+	public void getSubBlocks(Item item, CreativeTabs tab, List list) {
+		super.getSubBlocks(item, tab, list);
+		list.add(createCreativeKEB());
+	}
+
+	@Override
+	public ItemStack getPickBlock(MovingObjectPosition target, World world, int x, int y, int z) {
+		if (world.getBlockMetadata(x, y, z) == 9) {
+			return createCreativeKEB();
+		}
+		return super.getPickBlock(target, world, x, y, z);
 	}
 }

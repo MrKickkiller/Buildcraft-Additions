@@ -11,7 +11,6 @@ import net.minecraft.client.audio.SoundHandler;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.inventory.Container;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.StatCollector;
 
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -163,7 +162,7 @@ public abstract class GuiBase extends GuiContainer {
 	@Override
 	protected void drawGuiContainerForegroundLayer(int x, int y) {
 		if (drawPlayerInv)
-			drawString(StatCollector.translateToLocal("container.inventory"), 5, tileGuiYSize + 6, textColor);
+			drawString(Utils.localize("container.inventory"), 5, tileGuiYSize + 6, textColor);
 		String name = Utils.localize(String.format("gui.%s.name", getInventoryName()));
 		drawString(name, centerTitle ? getXSize() / 2 - (name.length() * 2) : titleXoffset, titleYoffset, textColor);
 		drawForegroundExtra(x, y);
@@ -200,12 +199,12 @@ public abstract class GuiBase extends GuiContainer {
 		if (!tooltips.isEmpty()) {
 			List<String> finalLines = new ArrayList<String>();
 			for (String line : tooltips) {
-				String[] lines = WordUtils.wrap(line, 50).split(System.getProperty("line.separator"));
+				String[] lines = WordUtils.wrap(line, 30).split(System.getProperty("line.separator"));
 				for (String wrappedLine : lines) {
 					finalLines.add(wrappedLine);
 				}
 			}
-			drawHoveringText(tooltips, x, y, fontRendererObj);
+			drawHoveringText(finalLines, x, y, fontRendererObj);
 		}
 	}
 
@@ -213,5 +212,13 @@ public abstract class GuiBase extends GuiContainer {
 		widgets.clear();
 		buttonList.clear();
 		initialize();
+	}
+
+	public int guiLeft() {
+		return guiLeft;
+	}
+
+	public int guiTop() {
+		return guiTop;
 	}
 }

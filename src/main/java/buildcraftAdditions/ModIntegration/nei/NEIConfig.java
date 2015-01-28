@@ -2,12 +2,17 @@ package buildcraftAdditions.ModIntegration.nei;
 
 import net.minecraft.item.ItemStack;
 
+import cpw.mods.fml.common.registry.GameRegistry;
+
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 
+import buildcraftAdditions.api.item.BCAItemManager;
+import buildcraftAdditions.api.item.dust.IDust;
 import buildcraftAdditions.items.ItemCanister;
 import buildcraftAdditions.reference.ItemsAndBlocks;
+import buildcraftAdditions.reference.Variables;
 
 import codechicken.nei.api.API;
 import codechicken.nei.api.IConfigureNEI;
@@ -21,28 +26,21 @@ import codechicken.nei.api.IConfigureNEI;
  */
 public class NEIConfig implements IConfigureNEI {
 
-    @Override
-    public void loadConfig() {
-
-        DustingRecipeHandler dustingRecipeHandler = new DustingRecipeHandler();
-
-        API.registerRecipeHandler(dustingRecipeHandler);
-        API.registerUsageHandler(dustingRecipeHandler);
-
-        API.addItemListEntry(new ItemStack(ItemsAndBlocks.powerCapsuleTier1));
-        API.addItemListEntry(new ItemStack(ItemsAndBlocks.powerCapsuleTier2));
-        API.addItemListEntry(new ItemStack(ItemsAndBlocks.powerCapsuleTier3));
-        API.addItemListEntry(ItemsAndBlocks.powerCapsuleTier1.createdFilledBattery());
-        API.addItemListEntry(ItemsAndBlocks.powerCapsuleTier2.createdFilledBattery());
-        API.addItemListEntry(ItemsAndBlocks.powerCapsuleTier3.createdFilledBattery());
-
-        API.addItemListEntry(new ItemStack(ItemsAndBlocks.ironCanister));
-        API.addItemListEntry(new ItemStack(ItemsAndBlocks.goldCanister));
-        API.addItemListEntry(new ItemStack(ItemsAndBlocks.diamondCanister));
-        addFullCanisters(ItemsAndBlocks.ironCanister);
-        addFullCanisters(ItemsAndBlocks.goldCanister);
-        addFullCanisters(ItemsAndBlocks.diamondCanister);
-    }
+	@Override
+	public void loadConfig() {
+		DustingRecipeHandler dustingRecipeHandler = new DustingRecipeHandler();
+		API.registerRecipeHandler(dustingRecipeHandler);
+		API.registerUsageHandler(dustingRecipeHandler);
+        API.hideItem(GameRegistry.findItemStack(Variables.MOD.ID, "test", 1));
+        API.hideItem(new ItemStack(ItemsAndBlocks.kinesisPipeWood));
+        API.hideItem(new ItemStack(ItemsAndBlocks.kinisisPipeStone));
+        for (IDust dust : BCAItemManager.dusts.getDusts()) {
+            if (dust == null)
+                continue;
+            String name = dust.getName().toLowerCase();
+            API.hideItem(GameRegistry.findItemStack(Variables.MOD.ID, "converter" + name, 1));
+        }
+	}
 
     public void addFullCanisters(ItemCanister canister) {
         for (Fluid fluid : FluidRegistry.getRegisteredFluids().values())

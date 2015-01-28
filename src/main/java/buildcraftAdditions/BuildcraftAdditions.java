@@ -3,6 +3,7 @@ package buildcraftAdditions;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
 import cpw.mods.fml.common.FMLCommonHandler;
@@ -17,6 +18,7 @@ import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fluids.FluidRegistry;
 
 import buildcraftAdditions.ModIntegration.ModIntegration;
 import buildcraftAdditions.ModIntegration.imc.IMCHandler;
@@ -26,6 +28,7 @@ import buildcraftAdditions.api.item.dust.IDust;
 import buildcraftAdditions.api.recipe.BCARecipeManager;
 import buildcraftAdditions.client.gui.gui.GuiHandler;
 import buildcraftAdditions.config.ConfigurationHandler;
+import buildcraftAdditions.core.BucketHandler;
 import buildcraftAdditions.core.EventListener;
 import buildcraftAdditions.core.Logger;
 import buildcraftAdditions.creative.TabBCAdditions;
@@ -83,7 +86,7 @@ public class BuildcraftAdditions {
 		NetworkRegistry.INSTANCE.registerGuiHandler(instance, new GuiHandler());
 		FMLCommonHandler.instance().bus().register(new EventListener.FML());
 		MinecraftForge.EVENT_BUS.register(new EventListener.Forge());
-
+		BucketHandler.register();
 		IMCSender.sendMessages();
 	}
 
@@ -125,6 +128,19 @@ public class BuildcraftAdditions {
 	@Mod.EventHandler
 	public void remap(FMLMissingMappingsEvent event) {
 		for (FMLMissingMappingsEvent.MissingMapping mapping : event.get()) {
+			if (mapping.name.toLowerCase().contains("fuelgas")) {
+				if (mapping.type == GameRegistry.Type.ITEM)
+					mapping.remap(Item.getItemFromBlock(FluidRegistry.getFluid("fuelgas").getBlock()));
+				if (mapping.type == GameRegistry.Type.BLOCK)
+					mapping.remap(FluidRegistry.getFluid("fuelgas").getBlock());
+				continue;
+			} else if (mapping.name.toLowerCase().contains("bioethanolgas")) {
+				if (mapping.type == GameRegistry.Type.ITEM)
+					mapping.remap(Item.getItemFromBlock(FluidRegistry.getFluid("bioethanolgas").getBlock()));
+				if (mapping.type == GameRegistry.Type.BLOCK)
+					mapping.remap(FluidRegistry.getFluid("bioethanolgas").getBlock());
+				continue;
+			}
 			for (IDust dust : BCAItemManager.dusts.getDusts()) {
 				if (dust == null)
 					continue;

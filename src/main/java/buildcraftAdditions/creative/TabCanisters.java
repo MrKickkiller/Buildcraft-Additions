@@ -1,20 +1,15 @@
 package buildcraftAdditions.creative;
 
-import java.util.List;
-
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
-
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 
-import buildcraftAdditions.items.ItemCanister;
 import buildcraftAdditions.reference.ItemsAndBlocks;
 
 /**
@@ -28,6 +23,7 @@ public class TabCanisters extends CreativeTabs {
 
 	public TabCanisters() {
 		super("bcaCanisters");
+		setBackgroundImageName("item_search.png");
 	}
 
 	@Override
@@ -43,18 +39,7 @@ public class TabCanisters extends CreativeTabs {
 	}
 
 	@Override
-	@SideOnly(Side.CLIENT)
-	public void displayAllReleventItems(List list) {
-		super.displayAllReleventItems(list);
-
-		createFullCanisters(ItemsAndBlocks.ironCanister, list);
-		createFullCanisters(ItemsAndBlocks.goldCanister, list);
-		createFullCanisters(ItemsAndBlocks.diamondCanister, list);
-	}
-
-	@SideOnly(Side.CLIENT)
-	public void createFullCanisters(ItemCanister canister, List list) {
-		for (Fluid fluid : FluidRegistry.getRegisteredFluids().values())
-			list.add(canister.getFilledItemStack(new FluidStack(fluid, canister.getCapacity())));
+	public boolean hasSearchBar() {
+		return true;
 	}
 }

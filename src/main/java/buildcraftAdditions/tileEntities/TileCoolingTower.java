@@ -1,7 +1,5 @@
 package buildcraftAdditions.tileEntities;
 
-import io.netty.buffer.ByteBuf;
-
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
@@ -16,6 +14,7 @@ import net.minecraftforge.fluids.IFluidHandler;
 import buildcraft.api.fuels.ICoolant;
 import buildcraft.api.transport.IPipeConnection;
 import buildcraft.api.transport.IPipeTile;
+import buildcraft.energy.fuels.CoolantManager;
 
 import buildcraftAdditions.BuildcraftAdditions;
 import buildcraftAdditions.api.recipe.BCARecipeManager;
@@ -28,7 +27,7 @@ import buildcraftAdditions.utils.ITankHolder;
 import buildcraftAdditions.utils.MultiBlockData;
 import buildcraftAdditions.utils.Tank;
 
-import buildcraft.energy.fuels.CoolantManager;
+import io.netty.buffer.ByteBuf;
 
 /**
  * Copyright (c) 2014, AEnterprise
@@ -52,8 +51,10 @@ public class TileCoolingTower extends TileBase implements IMultiBlockTile, IFlui
 	@Override
 	public void updateEntity() {
 		super.updateEntity();
-		if (data.moved)
+		if (data.moved) {
 			data.afterMoveCheck(worldObj);
+			worldObj.scheduleBlockUpdate(xCoord, yCoord, zCoord, worldObj.getBlock(xCoord, yCoord, zCoord), 80);
+		}
 		if (!isMaster())
 			return;
 		if (input.getFluid() != null && input.getFluid().amount <= 0)

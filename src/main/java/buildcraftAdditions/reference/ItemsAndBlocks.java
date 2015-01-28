@@ -6,7 +6,7 @@ import cpw.mods.fml.common.registry.GameRegistry;
 
 import buildcraftAdditions.BuildcraftAdditions;
 import buildcraftAdditions.blocks.BlockBCKinesisPipeWood;
-import buildcraftAdditions.blocks.BlockBCKinisisPipeCobble;
+import buildcraftAdditions.blocks.BlockBCKinisisPipeStone;
 import buildcraftAdditions.blocks.BlockBasicCoil;
 import buildcraftAdditions.blocks.BlockBasicDuster;
 import buildcraftAdditions.blocks.BlockChargingStation;
@@ -30,9 +30,11 @@ import buildcraftAdditions.items.BatteryBase;
 import buildcraftAdditions.items.ItemBase;
 import buildcraftAdditions.items.ItemCanister;
 import buildcraftAdditions.items.ItemMachineConfigurator;
+import buildcraftAdditions.items.ItemPipeColoringTool;
 import buildcraftAdditions.items.Tools.ItemKineticTool;
 import buildcraftAdditions.items.Tools.ToolUpgrade;
 import buildcraftAdditions.items.dust.ItemDust;
+import buildcraftAdditions.items.itemBlocks.ItemBlockKEB;
 import buildcraftAdditions.tileEntities.TileBasicCoil;
 import buildcraftAdditions.tileEntities.TileBasicDuster;
 import buildcraftAdditions.tileEntities.TileChargingStation;
@@ -72,7 +74,7 @@ public final class ItemsAndBlocks {
 	public static BlockLavaCoil lavaCoilBlock;
 	public static BlockKineticCoil kineticCoil;
 	public static BlockBCKinesisPipeWood kinesisPipeWood;
-	public static BlockBCKinisisPipeCobble kinisisPipeCobble;
+	public static BlockBCKinisisPipeStone kinisisPipeStone;
 	public static BlockKineticEnergyBufferTier1 kebT1;
 	public static MultiBlockKEBT2 kebT2;
 	public static MultiBlockKEBT3Core kebT3Core;
@@ -107,6 +109,7 @@ public final class ItemsAndBlocks {
 	public static Item heatPlating;
 	public static Item heatPlatingRaw;
 	public static Item dust;
+	public static Item pipeColoringTool;
 
 	public static void init() {
 		ironCanister = new ItemCanister("ironCanister", 2000);
@@ -193,15 +196,18 @@ public final class ItemsAndBlocks {
 		dust = new ItemDust();
 		GameRegistry.registerItem(dust, "dust");
 
+		pipeColoringTool = new ItemPipeColoringTool();
+		GameRegistry.registerItem(pipeColoringTool, "pipeColoringTool");
+
 		//START BLOCKS
 
 		kinesisPipeWood = new BlockBCKinesisPipeWood();
 		kinesisPipeWood.setBlockName("kinesisPipeWood");
 		GameRegistry.registerBlock(kinesisPipeWood, "kinesisPipeWood");
 
-		kinisisPipeCobble = new BlockBCKinisisPipeCobble();
-		kinisisPipeCobble.setBlockName("kinesisPipeCobble");
-		GameRegistry.registerBlock(kinisisPipeCobble, "kinesisPipeCobble");
+		kinisisPipeStone = new BlockBCKinisisPipeStone();
+		kinisisPipeStone.setBlockName("kinesisPipeCobble");
+		GameRegistry.registerBlock(kinisisPipeStone, "kinesisPipeCobble");
 
 		fluidicCompressorBlock = new BlockFluidicCompressor();
 		fluidicCompressorBlock.setBlockName("blockFluidicCompressor").setCreativeTab(BuildcraftAdditions.bcadditions);
@@ -245,7 +251,7 @@ public final class ItemsAndBlocks {
 
 		kebT1 = new BlockKineticEnergyBufferTier1();
 		kebT1.setBlockName("blockKEBT1").setCreativeTab(BuildcraftAdditions.bcadditions);
-		GameRegistry.registerBlock(kebT1, "KEBT1");
+		GameRegistry.registerBlock(kebT1, ItemBlockKEB.class, "KEBT1");
 
 		kebT2 = new MultiBlockKEBT2();
 		kebT2.setBlockName("blockKEBT2").setCreativeTab(BuildcraftAdditions.bcadditions);
