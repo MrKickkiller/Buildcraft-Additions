@@ -1,5 +1,6 @@
 package buildcraftAdditions.reference;
 
+import buildcraftAdditions.blocks.*;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
@@ -13,19 +14,6 @@ import net.minecraftforge.oredict.ShapedOreRecipe;
 import buildcraft.api.recipes.BuildcraftRecipeRegistry;
 
 import buildcraftAdditions.BuildcraftAdditions;
-import buildcraftAdditions.blocks.BlockBCKinesisPipeWood;
-import buildcraftAdditions.blocks.BlockBCKinisisPipeCobble;
-import buildcraftAdditions.blocks.BlockBasicCoil;
-import buildcraftAdditions.blocks.BlockBasicDuster;
-import buildcraftAdditions.blocks.BlockChargingStation;
-import buildcraftAdditions.blocks.BlockFluidicCompressor;
-import buildcraftAdditions.blocks.BlockHeatedFurnace;
-import buildcraftAdditions.blocks.BlockKineticCoil;
-import buildcraftAdditions.blocks.BlockKineticDuster;
-import buildcraftAdditions.blocks.BlockKineticEnergyBufferTier1;
-import buildcraftAdditions.blocks.BlockLavaCoil;
-import buildcraftAdditions.blocks.BlockMechanicalDuster;
-import buildcraftAdditions.blocks.BlockSemiAutomaticDuster;
 import buildcraftAdditions.blocks.multiBlocks.MultiBlockKEBT2;
 import buildcraftAdditions.blocks.multiBlocks.MultiBlockKEBT3Core;
 import buildcraftAdditions.blocks.multiBlocks.MultiBlockKEBT3Plating;
@@ -104,6 +92,9 @@ public final class ItemsAndBlocks {
 	public static Item diamondWireUnhardened;
 	public static Item diamondWire;
 	public static ItemKineticTool kineticTool;
+
+    //MrKickkiller
+    public static BlockFutureStone blockFutureStone;
 
 	public static void init() {
 		ironCanister = new ItemCanister("ironCanister", 2000);
@@ -233,6 +224,11 @@ public final class ItemsAndBlocks {
 		kebT2 = new MultiBlockKEBT2();
 		kebT2.setBlockName("blockKEBT2").setCreativeTab(BuildcraftAdditions.bcadditions);
 		GameRegistry.registerBlock(kebT2, "KEBT2");
+
+        //MrKickkiller
+        blockFutureStone = new BlockFutureStone();
+        blockFutureStone.setBlockName("FutureStone").setCreativeTab(BuildcraftAdditions.bcadditions).setBlockTextureName("bcadditions:futureStone.png");
+        GameRegistry.registerBlock(blockFutureStone,"FutureStone");
 
 		//kebT3Core = new MultiBlockKEBT3Core();
 		//kebT3Core.setBlockName("blockKEBT3Core").setCreativeTab(BuildcraftAdditions.bcadditions);

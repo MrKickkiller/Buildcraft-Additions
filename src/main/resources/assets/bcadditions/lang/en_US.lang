@@ -13,6 +13,7 @@ tile.blockKEBT2.name=Large Kinetic Energy Buffer
 tile.blockKEBT3Core.name=Advanced Kinetic Energy Buffer Core
 tile.blockKEBT3Plating.name=Advanced Kinetic Energy Buffer Plating
 tile.blockKEBT3.name=Advanced Kinetic Energy Buffer
+tile.blockFutureStone.name=Future Stone
 
 item.ironCanister.name=Iron Canister
 item.goldCanister.name=Gold Canister

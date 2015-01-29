@@ -22,3 +22,4 @@ lib/
 *.xcf
 *.bat
 curse.properties
+*.db
