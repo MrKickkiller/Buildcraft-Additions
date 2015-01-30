@@ -1,40 +1,49 @@
 package buildcraftAdditions.reference;
 
-import buildcraftAdditions.blocks.*;
-import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
+import buildcraftAdditions.blocks.Aesthetic.BlockFutureStone;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
 
-import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.registry.GameRegistry;
 
-import net.minecraftforge.oredict.ShapedOreRecipe;
-
-import buildcraft.api.recipes.BuildcraftRecipeRegistry;
-
 import buildcraftAdditions.BuildcraftAdditions;
+import buildcraftAdditions.blocks.BlockBCKinesisPipeWood;
+import buildcraftAdditions.blocks.BlockBCKinisisPipeStone;
+import buildcraftAdditions.blocks.BlockBasicCoil;
+import buildcraftAdditions.blocks.BlockBasicDuster;
+import buildcraftAdditions.blocks.BlockChargingStation;
+import buildcraftAdditions.blocks.BlockFluidicCompressor;
+import buildcraftAdditions.blocks.BlockHeatedFurnace;
+import buildcraftAdditions.blocks.BlockItemSorter;
+import buildcraftAdditions.blocks.BlockKineticCoil;
+import buildcraftAdditions.blocks.BlockKineticDuster;
+import buildcraftAdditions.blocks.BlockKineticEnergyBufferTier1;
+import buildcraftAdditions.blocks.BlockLavaCoil;
+import buildcraftAdditions.blocks.BlockMechanicalDuster;
+import buildcraftAdditions.blocks.BlockSemiAutomaticDuster;
+import buildcraftAdditions.blocks.multiBlocks.MultiBlockCoolingTowerValve;
+import buildcraftAdditions.blocks.multiBlocks.MultiBlockCoolingTowerWalls;
 import buildcraftAdditions.blocks.multiBlocks.MultiBlockKEBT2;
 import buildcraftAdditions.blocks.multiBlocks.MultiBlockKEBT3Core;
 import buildcraftAdditions.blocks.multiBlocks.MultiBlockKEBT3Plating;
+import buildcraftAdditions.blocks.multiBlocks.MultiBlockRefineryValve;
+import buildcraftAdditions.blocks.multiBlocks.MultiBlockRefineryWalls;
+
 import buildcraftAdditions.items.BatteryBase;
 import buildcraftAdditions.items.ItemBase;
 import buildcraftAdditions.items.ItemCanister;
+import buildcraftAdditions.items.ItemMachineConfigurator;
+import buildcraftAdditions.items.ItemPipeColoringTool;
 import buildcraftAdditions.items.Tools.ItemKineticTool;
-import buildcraftAdditions.items.Tools.ToolCoreRecipe;
 import buildcraftAdditions.items.Tools.ToolUpgrade;
-import buildcraftAdditions.items.Tools.UpgradeRecipeDiamondStick;
-import buildcraftAdditions.items.Tools.UpgradeRecipeDrillHead;
-import buildcraftAdditions.items.Tools.UpgradeRecipeEmeraldStick;
-import buildcraftAdditions.items.Tools.UpgradeRecipeExcavationAttachment;
-import buildcraftAdditions.items.Tools.UpgradeRecipeGoldStick;
-import buildcraftAdditions.items.Tools.UpgradeRecipeSawBlade;
-import buildcraftAdditions.items.Tools.UpgradeRecipeTiller;
+import buildcraftAdditions.items.dust.ItemDust;
+import buildcraftAdditions.items.itemBlocks.ItemBlockKEB;
 import buildcraftAdditions.tileEntities.TileBasicCoil;
 import buildcraftAdditions.tileEntities.TileBasicDuster;
 import buildcraftAdditions.tileEntities.TileChargingStation;
+import buildcraftAdditions.tileEntities.TileCoolingTower;
 import buildcraftAdditions.tileEntities.TileFluidicCompressor;
 import buildcraftAdditions.tileEntities.TileHeatedFurnace;
+import buildcraftAdditions.tileEntities.TileItemSorter;
 import buildcraftAdditions.tileEntities.TileKEBT2;
 import buildcraftAdditions.tileEntities.TileKEBT3;
 import buildcraftAdditions.tileEntities.TileKineticCoil;
@@ -42,8 +51,9 @@ import buildcraftAdditions.tileEntities.TileKineticDuster;
 import buildcraftAdditions.tileEntities.TileKineticEnergyBufferTier1;
 import buildcraftAdditions.tileEntities.TileLavaCoil;
 import buildcraftAdditions.tileEntities.TileMechanicalDuster;
+import buildcraftAdditions.tileEntities.TileRefinery;
 import buildcraftAdditions.tileEntities.TileSemiAutomaticDuster;
-import buildcraftAdditions.utils.BCItems;
+
 /**
  * Copyright (c) 2014, AEnterprise
  * http://buildcraftadditions.wordpress.com/
@@ -66,15 +76,20 @@ public final class ItemsAndBlocks {
 	public static BlockLavaCoil lavaCoilBlock;
 	public static BlockKineticCoil kineticCoil;
 	public static BlockBCKinesisPipeWood kinesisPipeWood;
-	public static BlockBCKinisisPipeCobble kinisisPipeCobble;
+	public static BlockBCKinisisPipeStone kinisisPipeStone;
 	public static BlockKineticEnergyBufferTier1 kebT1;
 	public static MultiBlockKEBT2 kebT2;
 	public static MultiBlockKEBT3Core kebT3Core;
 	public static MultiBlockKEBT3Plating kebT3Plating;
+	public static MultiBlockRefineryWalls refineryWalls;
+	public static MultiBlockRefineryValve refineryValve;
+	public static MultiBlockCoolingTowerWalls coolingTowerWalls;
+	public static MultiBlockCoolingTowerValve coolingTowerValve;
+	public static BlockItemSorter itemSorter;
 
-	public static Item powerCapsuleTier1;
-	public static Item powerCapsuleTier2;
-	public static Item powerCapsuleTier3;
+	public static BatteryBase powerCapsuleTier1;
+	public static BatteryBase powerCapsuleTier2;
+	public static BatteryBase powerCapsuleTier3;
 	public static Item ironStick;
 	public static Item goldStick;
 	public static Item diamondStick;
@@ -92,8 +107,13 @@ public final class ItemsAndBlocks {
 	public static Item diamondWireUnhardened;
 	public static Item diamondWire;
 	public static ItemKineticTool kineticTool;
+	public static Item machineConfigurator;
+	public static Item heatPlating;
+	public static Item heatPlatingRaw;
+	public static Item dust;
+	public static Item pipeColoringTool;
 
-    //MrKickkiller
+    //Aesthetic
     public static BlockFutureStone blockFutureStone;
 
 	public static void init() {
@@ -169,13 +189,30 @@ public final class ItemsAndBlocks {
 		diamondWire = new ItemBase("wireDiamond");
 		GameRegistry.registerItem(diamondWire, "wireDiamond");
 
+		machineConfigurator = new ItemMachineConfigurator();
+		GameRegistry.registerItem(machineConfigurator, "machineConfigurator");
+
+		heatPlatingRaw = new ItemBase("heatPlatingRaw");
+		GameRegistry.registerItem(heatPlatingRaw, "heatPlatingRaw");
+
+		heatPlating = new ItemBase("heatPlating");
+		GameRegistry.registerItem(heatPlating, "heatPlating");
+
+		dust = new ItemDust();
+		GameRegistry.registerItem(dust, "dust");
+
+		pipeColoringTool = new ItemPipeColoringTool();
+		GameRegistry.registerItem(pipeColoringTool, "pipeColoringTool");
+
+		//START BLOCKS
+
 		kinesisPipeWood = new BlockBCKinesisPipeWood();
 		kinesisPipeWood.setBlockName("kinesisPipeWood");
 		GameRegistry.registerBlock(kinesisPipeWood, "kinesisPipeWood");
 
-		kinisisPipeCobble = new BlockBCKinisisPipeCobble();
-		kinisisPipeCobble.setBlockName("kinesisPipeCobble");
-		GameRegistry.registerBlock(kinisisPipeCobble, "kinesisPipeCobble");
+		kinisisPipeStone = new BlockBCKinisisPipeStone();
+		kinisisPipeStone.setBlockName("kinesisPipeCobble");
+		GameRegistry.registerBlock(kinisisPipeStone, "kinesisPipeCobble");
 
 		fluidicCompressorBlock = new BlockFluidicCompressor();
 		fluidicCompressorBlock.setBlockName("blockFluidicCompressor").setCreativeTab(BuildcraftAdditions.bcadditions);
@@ -219,73 +256,48 @@ public final class ItemsAndBlocks {
 
 		kebT1 = new BlockKineticEnergyBufferTier1();
 		kebT1.setBlockName("blockKEBT1").setCreativeTab(BuildcraftAdditions.bcadditions);
-		GameRegistry.registerBlock(kebT1, "KEBT1");
+		GameRegistry.registerBlock(kebT1, ItemBlockKEB.class, "KEBT1");
 
 		kebT2 = new MultiBlockKEBT2();
 		kebT2.setBlockName("blockKEBT2").setCreativeTab(BuildcraftAdditions.bcadditions);
 		GameRegistry.registerBlock(kebT2, "KEBT2");
 
-        //MrKickkiller
+		kebT3Core = new MultiBlockKEBT3Core();
+		kebT3Core.setBlockName("blockKEBT3Core").setCreativeTab(BuildcraftAdditions.bcadditions);
+		GameRegistry.registerBlock(kebT3Core, "KEBT3Core");
+
+		kebT3Plating = new MultiBlockKEBT3Plating();
+		kebT3Plating.setBlockName("blockKEBT3Plating").setCreativeTab(BuildcraftAdditions.bcadditions);
+		GameRegistry.registerBlock(kebT3Plating, "KEBT3Plating");
+
+		refineryWalls = new MultiBlockRefineryWalls();
+		refineryWalls.setBlockName("blockRefineryWalls").setCreativeTab(BuildcraftAdditions.bcadditions);
+		GameRegistry.registerBlock(refineryWalls, "refinerywals");
+
+		refineryValve = new MultiBlockRefineryValve();
+		refineryValve.setBlockName("blockRefineryValve").setCreativeTab(BuildcraftAdditions.bcadditions);
+		GameRegistry.registerBlock(refineryValve, "refineryValve");
+
+		coolingTowerWalls = new MultiBlockCoolingTowerWalls();
+		coolingTowerWalls.setBlockName("blockCoolingTowerWalls").setCreativeTab(BuildcraftAdditions.bcadditions);
+		GameRegistry.registerBlock(coolingTowerWalls, "blockCoolingTowerWalls)");
+
+		coolingTowerValve = new MultiBlockCoolingTowerValve();
+		coolingTowerValve.setBlockName("blockCoolingTowerValve").setCreativeTab(BuildcraftAdditions.bcadditions);
+		GameRegistry.registerBlock(coolingTowerValve, "blockCoolingTowerValve");
+
+		itemSorter = new BlockItemSorter();
+		itemSorter.setBlockName("blockItemSorter").setCreativeTab(BuildcraftAdditions.bcadditions);
+		GameRegistry.registerBlock(itemSorter, "blockItemSorter");
+
+        //Aesthetic blocks
+
         blockFutureStone = new BlockFutureStone();
-        blockFutureStone.setBlockName("FutureStone").setCreativeTab(BuildcraftAdditions.bcadditions).setBlockTextureName("bcadditions:futureStone.png");
-        GameRegistry.registerBlock(blockFutureStone,"FutureStone");
+        blockFutureStone.setBlockName("blockFutureStone").setCreativeTab(BuildcraftAdditions.bcadditions).setBlockTextureName("bcadditions:futureStone.png");
+        GameRegistry.registerBlock(blockFutureStone,"blockFutureStone");
+    }
 
-		//kebT3Core = new MultiBlockKEBT3Core();
-		//kebT3Core.setBlockName("blockKEBT3Core").setCreativeTab(BuildcraftAdditions.bcadditions);
-		//GameRegistry.registerBlock(kebT3Core, "KEBT3Core");
-
-		//kebT3Plating = new MultiBlockKEBT3Plating();
-		//kebT3Plating.setBlockName("blockKEBT3Plating").setCreativeTab(BuildcraftAdditions.bcadditions);
-		//GameRegistry.registerBlock(kebT3Plating, "KEBT3Plating");
-	}
-
-	public static void addRecepies() {
-		if (Loader.isModLoaded("BuildCraft|Transport")) {
-			BuildcraftRecipeRegistry.assemblyTable.addRecipe("ironStick", 1000, new ItemStack(ironStick), Items.iron_ingot);
-			BuildcraftRecipeRegistry.assemblyTable.addRecipe("goldStick", 2000, new ItemStack(goldStick), new ItemStack(Items.gold_ingot, 4));
-			BuildcraftRecipeRegistry.assemblyTable.addRecipe("diamondStick", 3000, new ItemStack(diamondStick), new ItemStack(Items.diamond, 2));
-			BuildcraftRecipeRegistry.assemblyTable.addRecipe("kineticTool", 8000, new ItemStack(kineticTool), new ItemStack(Items.diamond, 3), ironStick, toolCore);
-			BuildcraftRecipeRegistry.assemblyTable.addRecipe("toolUpgradeChainsaw", 1000, new ItemStack(toolUpgradeChainsaw), toolCore, new ItemStack(Items.iron_ingot, 3), new ItemStack(Items.gold_ingot, 2));
-			BuildcraftRecipeRegistry.assemblyTable.addRecipe("toolUpgradeDrill", 1000, new ItemStack(toolUpgradeDrill), toolCore, new ItemStack(Items.iron_ingot, 3), new ItemStack(Items.gold_ingot, 2));
-			BuildcraftRecipeRegistry.assemblyTable.addRecipe("toolUpgradeDigger", 1000, new ItemStack(toolUpgradeDigger), toolCore, new ItemStack(Items.iron_ingot, 3), new ItemStack(Items.gold_ingot, 2));
-			BuildcraftRecipeRegistry.assemblyTable.addRecipe("toolUpgradeHoe", 1000, new ItemStack(toolUpgradeHoe), toolCore, new ItemStack(Items.iron_ingot, 3), new ItemStack(Items.gold_ingot, 2));
-			BuildcraftRecipeRegistry.integrationTable.addRecipe(new ToolCoreRecipe());
-			BuildcraftRecipeRegistry.integrationTable.addRecipe(new UpgradeRecipeDrillHead());
-			BuildcraftRecipeRegistry.integrationTable.addRecipe(new UpgradeRecipeExcavationAttachment());
-			BuildcraftRecipeRegistry.integrationTable.addRecipe(new UpgradeRecipeSawBlade());
-			BuildcraftRecipeRegistry.integrationTable.addRecipe(new UpgradeRecipeTiller());
-			BuildcraftRecipeRegistry.integrationTable.addRecipe(new UpgradeRecipeGoldStick());
-			BuildcraftRecipeRegistry.integrationTable.addRecipe(new UpgradeRecipeDiamondStick());
-			BuildcraftRecipeRegistry.integrationTable.addRecipe(new UpgradeRecipeEmeraldStick());
-
-			GameRegistry.addRecipe(new ItemStack(ironCanister, 4), "PIP", "IGI", "PIP", 'P', BCItems.SEALANT, 'I', Items.iron_ingot, 'G', Blocks.glass_pane);
-			GameRegistry.addRecipe(new ItemStack(goldCanister), "PGP", "GIG", "PGP", 'P', BCItems.SEALANT, 'G', Items.gold_ingot, 'I', ironCanister);
-			GameRegistry.addRecipe(new ItemStack(diamondCanister), "PDP", "DGD", "PDP", 'P', BCItems.SEALANT, 'D', Items.diamond, 'G', goldCanister);
-			GameRegistry.addRecipe(new ItemStack(fluidicCompressorBlock), "IFI", "PGP", "IMI", 'I', BCItems.IRON_GEAR, 'F', BCItems.FLOODGATE, 'P', Blocks.piston, 'G', goldCanister, 'M', BCItems.PUMP);
-			GameRegistry.addRecipe(new ItemStack(chargingStationBlock), "I I", "WKW", "I I", 'I', BCItems.IRON_GEAR, 'W', BCItems.PIPE_POWER_WOOD, 'K', powerCapsuleTier2);
-			GameRegistry.addRecipe(new ItemStack(powerCapsuleTier1), "IGI", "IRI", "IGI", 'I', Items.iron_ingot, 'G', Items.gold_ingot, 'R', Blocks.redstone_block);
-			GameRegistry.addRecipe(new ItemStack(powerCapsuleTier2), "GDG", "GPG", "GDG", 'G', Items.gold_ingot, 'D', Items.diamond, 'P', powerCapsuleTier1);
-			GameRegistry.addRecipe(new ItemStack(powerCapsuleTier3), "DED", "DPD", "DED", 'D', Items.diamond, 'E', Items.emerald, 'P', powerCapsuleTier2);
-			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(basicDusterBlock), "GIG", "SLS", "SSS", 'G', BCItems.STONE_GEAR, 'I', Items.iron_ingot, 'S', Blocks.stone, 'L', "slimeball"));
-			GameRegistry.addRecipe(new ItemStack(mechanicalDusterBlock), "GMG", "SFS", "SSS", 'G', BCItems.IRON_GEAR, 'M', Items.gold_ingot, 'F', itemGrindingWheel, 'S', Blocks.stone);
-			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(semiAutomaticDusterBlock), "GMG", "PLP", "SSS", 'G', BCItems.IRON_GEAR, 'M', Items.gold_ingot, 'P', BCItems.PIPE_ITEMS_GOLD, 'L', "slimeball", 'S', Blocks.stone));
-			GameRegistry.addRecipe(new ItemStack(kineticDusterBlock), "GGG", "P P", "IDI", 'G', Blocks.glass, 'P', BCItems.PIPE_ITEMS_GOLD, 'I', BCItems.GOLD_GEAR, 'D', BCItems.DIAMOND_GEAR);
-			GameRegistry.addRecipe(new ItemStack(itemGrindingWheel), "FFF", "FGF", "FFF", 'F', Items.flint, 'G', BCItems.STONE_GEAR);
-			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(itemIronWireUnhardened, 2), "DDD", 'D', "dustIron"));
-			GameRegistry.addSmelting(itemIronWireUnhardened, new ItemStack(itemIronWire, 2), 0.5f);
-			GameRegistry.addRecipe(new ItemStack(basicCoilBlock), "WWW", "WIW", "WWW", 'W', itemIronWire, 'I', Items.iron_ingot);
-			GameRegistry.addRecipe(new ItemStack(heatedFurnaceBlock), "III", "IFI", "III", 'I', Items.iron_ingot, 'F', Blocks.furnace);
-			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(goldWireUnhardened, 2), "DDD", 'D', "dustGold"));
-			GameRegistry.addSmelting(goldWireUnhardened, new ItemStack(goldWire, 2), 0.5f);
-			GameRegistry.addRecipe(new ItemStack(lavaCoilBlock), "WWW", "WIW", "WWW", 'W', goldWire, 'I', Items.iron_ingot);
-			GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(diamondWireUnhardened, 2), "DDD", 'D', "dustDiamond"));
-			GameRegistry.addSmelting(diamondWireUnhardened, new ItemStack(diamondWire, 2), 0.5f);
-			GameRegistry.addRecipe(new ItemStack(kineticCoil), "WWW", "WIW", "WWW", 'W', diamondWire, 'I', Items.iron_ingot);
-			GameRegistry.addRecipe(new ItemStack(kebT1), "IBI", "PBP", "IBI", 'I', Items.iron_ingot, 'B', powerCapsuleTier1, 'P', BCItems.PIPE_POWER_GOLD);
-			GameRegistry.addRecipe(new ItemStack(kebT2), "III", "PBP", "III", 'I', Items.iron_ingot, 'B', powerCapsuleTier2, 'P', BCItems.PIPE_POWER_GOLD);
-			GameRegistry.addRecipe(new ItemStack(kebT3Core), "DBD", "PBP", "DBD", 'D', Items.diamond, 'B', powerCapsuleTier3, 'P', BCItems.PIPE_POWER_DIAMOND);
-			GameRegistry.addRecipe(new ItemStack(kebT3Plating), "PGP", "GGG", "III", 'P', BCItems.PIPE_POWER_DIAMOND, 'G', Items.gold_ingot, 'I', Items.iron_ingot);
-		}
+	public static void registerTileEntities() {
 		GameRegistry.registerTileEntity(TileFluidicCompressor.class, "TileFluidicCompressor");
 		GameRegistry.registerTileEntity(TileChargingStation.class, "TileChargingStation");
 		GameRegistry.registerTileEntity(TileHeatedFurnace.class, "TileHeatedFurnace");
@@ -299,5 +311,8 @@ public final class ItemsAndBlocks {
 		GameRegistry.registerTileEntity(TileKineticEnergyBufferTier1.class, "TileKineticEnergyBufferTier1");
 		GameRegistry.registerTileEntity(TileKEBT2.class, "TileKineticEnergyBufferTier2");
 		GameRegistry.registerTileEntity(TileKEBT3.class, "TileKineticEnergyBufferTier3");
+		GameRegistry.registerTileEntity(TileRefinery.class, "TileRefinery");
+		GameRegistry.registerTileEntity(TileCoolingTower.class, "CoolingTower");
+		GameRegistry.registerTileEntity(TileItemSorter.class, "ItemSorter");
 	}
 }
